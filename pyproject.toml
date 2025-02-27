@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "index-backtesting"
+version = "0.1.0"
+description = "Miniature Backtesting API for Index Calculation"
+authors = ["Garrett Yan"]
+readme = "README.md"
+packages = [{ include = "app" }]
+
+[tool.poetry.dependencies]
+python = "3.11.11"
+fastapi = "0.115.9"
+pydantic = "2.10.6"
+pandas = "2.2.3"
+pyarrow = "19.0.1"
+numpy = "2.2.3"
+uvicorn = "0.34.0"
+requests = "2.32.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
