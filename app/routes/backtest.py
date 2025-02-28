@@ -24,4 +24,4 @@ async def backtest(
 
     """
     
-    return backtest_service.run_backtest(backtest_request=backtest_request)
+    return backtest_service.run_backtest(request=backtest_request)
