@@ -6,6 +6,8 @@ from pydantic import BaseModel
 from typing import Dict, List, Optional
 
 class BacktestRequest(BaseModel):
+    """Request model for backtesting."""
+
     # Calendar rule
     calendar_rule: CalendarRule
     list_of_dates: Optional[List[datetime.datetime]] = None # for customer dates
@@ -23,5 +25,7 @@ class BacktestRequest(BaseModel):
     weighting_maximum: Optional[float] = None # for optimized weight
 
 class BacktestResponse(BaseModel):
+    """Response model for backtesting."""
+
     execution_time: float
     weights: Dict[datetime.datetime, Dict[str, float]]
