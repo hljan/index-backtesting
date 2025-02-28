@@ -3,11 +3,14 @@
 import datetime
 from app.models.data_field import DataField
 from app.models.filters import CalendarRule, FilterType, WeightingMethod
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
+from pydantic.alias_generators import to_camel
 from typing import Dict, List, Literal, Optional, Union
 
 class BacktestRequest(BaseModel):
     """Request model for backtesting."""
+
+    model_config = ConfigDict(alias_generator=to_camel) # For better JSON serialization
 
     data_field: DataField
     calendar_rule: Union[
@@ -87,6 +90,8 @@ class BacktestRequest(BaseModel):
 
 class BacktestResponse(BaseModel):
     """Response model for backtesting."""
+
+    model_config = ConfigDict(alias_generator=to_camel) # For better JSON serialization
 
     execution_time: float
     weights: Dict[datetime.datetime, Dict[str, float]]

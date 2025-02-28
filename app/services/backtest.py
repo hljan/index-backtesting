@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 from datetime import time
-from pandas import pd
+import pandas as pd
 from app.clients.data_loader import DataLoaderClient
 from app.models.backtest import BacktestRequest, BacktestResponse
 
