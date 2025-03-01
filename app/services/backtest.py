@@ -3,6 +3,7 @@
 from abc import ABC, abstractmethod
 import time
 import pandas as pd
+import numpy as np
 from app.clients.data_loader import DataLoaderClient
 from app.models.backtest import BacktestRequest, BacktestResponse
 from app.utils.check_rule import (
@@ -65,8 +66,13 @@ class WeightingRule(Rule):
             filtered_data *= 1 / len(filtered_data)
             filtered_data = filtered_data.sum(axis=1)
         elif is_weighting_method_optimized_weight(request):
-            # TODO: Implement optimized weighting logic
-            filtered_data = filtered_data.fillna(1)
+            optimal_weights = np.full_like(filtered_data.values, request.weighting_minimum)
+            remaining_weight = 1 - np.sum(optimal_weights, axis=1)
+            for i in range(filtered_data.shape[1]):
+                additional_weight = np.minimum(request.weighting_minimum - optimal_weights[:, i], remaining_weight)
+                optimal_weights[:, i] += additional_weight
+                remaining_weight -= additional_weight
+            filtered_data = filtered_data * optimal_weights
             filtered_data = filtered_data.sum(axis=1)
         else:
             raise ValueError("Weighting rule is not supported.")
@@ -80,8 +86,8 @@ class BacktestService:
     def __init__(self, data_loader_client: DataLoaderClient):
         self.rules = [
             CalendarRule(),
-            # FilterRule(),
-            # WeightingRule()
+            FilterRule(),
+            WeightingRule()
         ]
         self.data_loader_client = data_loader_client
     
