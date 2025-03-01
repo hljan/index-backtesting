@@ -3,8 +3,8 @@
 from enum import Enum
 
 
-class CalendarRule(str, Enum):
-    """Calendar rule for backtesting."""
+class CalendarType(str, Enum):
+    """Calendar type for backtesting."""
 
     CUSTOMER_DATES = "customer_dates"
     QUARTERLY_DATES = "quarterly_dates"

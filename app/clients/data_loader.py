@@ -24,7 +24,7 @@ class ParquetLoaderClient(DataLoaderClient):
     def load_data(self, data_field: DataField) -> None:
         """Load data from parquet files."""
 
-        file_path = f"data/{data_field}.parquet"
+        file_path = f"data/{data_field.value}.parquet"
         if not os.path.exists(file_path):
             # Parquet file does not exist. Trying to generate and load from data generation script.
             generate_dummy_data()
