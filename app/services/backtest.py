@@ -69,7 +69,7 @@ class WeightingRule(Rule):
             optimal_weights = np.full_like(filtered_data.values, request.weighting_minimum)
             remaining_weight = 1 - np.sum(optimal_weights, axis=1)
             for i in range(filtered_data.shape[1]):
-                additional_weight = np.minimum(request.weighting_minimum - optimal_weights[:, i], remaining_weight)
+                additional_weight = np.minimum(request.weighting_maximum - optimal_weights[:, i], remaining_weight)
                 optimal_weights[:, i] += additional_weight
                 remaining_weight -= additional_weight
             filtered_data = filtered_data * optimal_weights
